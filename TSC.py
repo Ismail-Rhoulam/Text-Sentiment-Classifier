@@ -1,35 +1,22 @@
 import math
+import re
 
 
-def rm_html_tags(text):     # Removes HTML tags from a given string
 
-    tags = [
-        "<p>", "</p>", "<br/>", "<hr/>", "<blockquote>", "</blockquote>", "<pre>",
-        "</pre>", "<b>", "</b>", "<strong>", "</strong>", "<i>", "</i>", "<em>",
-        "</em>", "<mark>", "</mark>", "<small>", "</small>", "<del>", "</del>",
-        "<ins>", "</ins>", "<sub>", "</sub>", "<sup>", "</sup>", "<q>", "</q>",
-        "<br />"
-        ]
-    for tag in tags:
-        if tag in text:
-            text = text.replace(tag, ' ')
-    return text
+
+def clean(text):   # Removes HTML tags & punctuations from a given string
     
-
-def rm_punctuation(text):   # Removes punctuations from a given string
-
-    punc = '''.,!?;:-'“”()[]{}…/\&*@#$%^+=~|<>_—–'''
-    for i in text:
-        if i in punc:
-            text = text.replace(i, ' ')
+    # Remove HTML tags
+    text = re.sub(r'<[^>]+>', ' ', text)    
+    # Remove punctuations
+    text = re.sub(r'[^\w\s]', ' ', text)    
     return text
 
 
 def processing(text):   # Processing and tokenizing a given string
 
     text = text.lower()
-    text = rm_html_tags(text)
-    text = rm_punctuation(text)
+    text = clean(text)
     tokens = text.split()
     return tokens
 
